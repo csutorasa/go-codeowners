@@ -3,7 +3,7 @@
 To install use:
 
 ```shell
-go install github.com/csutorasa/go-codeowners
+go install github.com/csutorasa/go-codeowners@latest
 ```
 
 Usage:
