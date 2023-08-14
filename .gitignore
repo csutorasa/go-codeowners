@@ -1,0 +1,8 @@
+# Output
+/codeowners
+/codeowners.exe
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+.idea
