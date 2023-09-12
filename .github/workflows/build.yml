@@ -26,9 +26,9 @@ jobs:
       - name: Upload output
         uses: actions/upload-artifact@v3
         with:
-          name: icon-metrics-windows-amd64
+          name: go-codeowners-windows-amd64
           path: |
-            icon-metrics.exe
+            go-codeowners.exe
             config.yml
 
   build_linux:
@@ -51,22 +51,13 @@ jobs:
         env:
           GOOS: linux
           GOARCH: amd64
-
-      - name: Create deb
-        run: .deb/build.sh amd64
-      
-      - name: Upload deb
-        uses: actions/upload-artifact@v3
-        with:
-          name: icon-metrics-deb-amd64
-          path: .deb/icon-metrics.deb
       
       - name: Upload output
         uses: actions/upload-artifact@v3
         with:
-          name: icon-metrics-linux-amd64
+          name: go-codeowners-linux-amd64
           path: |
-            icon-metrics
+            go-codeowners
             config.yml
         
       - name: Build
@@ -74,22 +65,13 @@ jobs:
         env:
           GOOS: linux
           GOARCH: arm64
-
-      - name: Create deb
-        run: .deb/build.sh arm64
-      
-      - name: Upload deb
-        uses: actions/upload-artifact@v3
-        with:
-          name: icon-metrics-deb-arm64
-          path: .deb/icon-metrics.deb
       
       - name: Upload output
         uses: actions/upload-artifact@v3
         with:
-          name: icon-metrics-linux-arm64
+          name: go-codeowners-linux-arm64
           path: |
-            icon-metrics
+            go-codeowners
             config.yml
         
   build_darwin:
@@ -113,9 +95,9 @@ jobs:
       - name: Upload output
         uses: actions/upload-artifact@v3
         with:
-          name: icon-metrics-darwin-amd64
+          name: go-codeowners-darwin-amd64
           path: |
-            icon-metrics
+            go-codeowners
             config.yml
         
       - name: Build
@@ -127,9 +109,9 @@ jobs:
       - name: Upload output
         uses: actions/upload-artifact@v3
         with:
-          name: icon-metrics-darwin-arm64
+          name: go-codeowners-darwin-arm64
           path: |
-            icon-metrics
+            go-codeowners
             config.yml
 
       
