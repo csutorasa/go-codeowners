@@ -34,6 +34,20 @@ jobs:
             go-codeowners.exe
             config.yml
 
+      - name: Build
+        run: go build -ldflags "-s -w"
+        env:
+          GOOS: windows
+          GOARCH: arm64
+      
+      - name: Upload output
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-codeowners-windows-arm64
+          path: |
+            go-codeowners.exe
+            config.yml
+
   build_linux:
     name: Build linux
     runs-on: ubuntu-latest
