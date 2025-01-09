@@ -11,12 +11,12 @@ env:
   goVersion: '1.23'
 
 jobs:
-  build:
+  test:
     strategy:
+      fail-fast: false
       matrix:
         os: [macos, windows, ubuntu]
-        arch: [amd64, arm64]
-    name: Build ${{ matrix.os }} ${{ matrix.arch }}
+    name: Test ${{ matrix.os }}
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Checkout repository
@@ -29,6 +29,24 @@ jobs:
         
       - name: Test
         run: go test ./...
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos, windows, ubuntu]
+        arch: [amd64, arm64]
+    name: Build ${{ matrix.os }} ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}-latest
+    needs: [test]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.goVersion }}
         
       - name: Build
         run: go build -ldflags "-s -w"
