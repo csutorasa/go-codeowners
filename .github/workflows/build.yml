@@ -29,8 +29,6 @@ jobs:
         
       - name: Test
         run: go test ./...
-        env:
-          GOARCH: ${{ matrix.arch }}
         
       - name: Build
         run: go build -ldflags "-s -w"
