@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+
 env:
   goVersion: '1.23'
 
@@ -25,6 +26,11 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.goVersion }}
+        
+      - name: Test
+        run: go test ./...
+        env:
+          GOARCH: ${{ matrix.arch }}
         
       - name: Build
         run: go build -ldflags "-s -w"
