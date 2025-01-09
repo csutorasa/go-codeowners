@@ -6,11 +6,17 @@ on:
   push:
     branches:
       - main
+env:
+  goVersion: '1.23'
 
 jobs:
-  build_windows:
-    name: Build windows
-    runs-on: windows-latest
+  build:
+    strategy:
+      matrix:
+        os: [macos, windows, ubuntu]
+        arch: [amd64, arm64]
+    name: Build ${{ matrix.os }} ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,114 +24,17 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.23'
+          go-version: ${{ env.goVersion }}
         
       - name: Build
         run: go build -ldflags "-s -w"
         env:
-          GOOS: windows
-          GOARCH: amd64
+          GOARCH: ${{ matrix.arch }}
       
       - name: Upload output
         uses: actions/upload-artifact@v4
         with:
-          name: go-codeowners-windows-amd64
+          name: icon-metrics-${{ matrix.os }}-${{ matrix.arch }}
           path: |
+            go-codeowners
             go-codeowners.exe
-            config.yml
-
-      - name: Build
-        run: go build -ldflags "-s -w"
-        env:
-          GOOS: windows
-          GOARCH: arm64
-      
-      - name: Upload output
-        uses: actions/upload-artifact@v4
-        with:
-          name: go-codeowners-windows-arm64
-          path: |
-            go-codeowners.exe
-            config.yml
-
-  build_linux:
-    name: Build linux
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.23'
-
-      - name: Build
-        run: go build -ldflags "-s -w"
-        env:
-          GOOS: linux
-          GOARCH: amd64
-      
-      - name: Upload output
-        uses: actions/upload-artifact@v4
-        with:
-          name: go-codeowners-linux-amd64
-          path: |
-            go-codeowners
-            config.yml
-        
-      - name: Build
-        run: go build -ldflags "-s -w"
-        env:
-          GOOS: linux
-          GOARCH: arm64
-      
-      - name: Upload output
-        uses: actions/upload-artifact@v4
-        with:
-          name: go-codeowners-linux-arm64
-          path: |
-            go-codeowners
-            config.yml
-        
-  build_darwin:
-    name: Build Mac
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.23'
-
-      - name: Build
-        run: go build -ldflags "-s -w"
-        env:
-          GOOS: darwin
-          GOARCH: amd64
-      
-      - name: Upload output
-        uses: actions/upload-artifact@v4
-        with:
-          name: go-codeowners-darwin-amd64
-          path: |
-            go-codeowners
-            config.yml
-        
-      - name: Build
-        run: go build -ldflags "-s -w"
-        env:
-          GOOS: darwin
-          GOARCH: arm64
-      
-      - name: Upload output
-        uses: actions/upload-artifact@v4
-        with:
-          name: go-codeowners-darwin-arm64
-          path: |
-            go-codeowners
-            config.yml
-
-      
