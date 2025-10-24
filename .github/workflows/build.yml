@@ -54,7 +54,7 @@ jobs:
           GOARCH: ${{ matrix.arch }}
       
       - name: Upload output
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: icon-metrics-${{ matrix.os }}-${{ matrix.arch }}
           path: |
